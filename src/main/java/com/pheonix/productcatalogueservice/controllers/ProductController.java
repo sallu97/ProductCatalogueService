@@ -22,6 +22,7 @@ public class ProductController {
 
     @PostMapping("/products")
     public Product createProduct(@RequestBody  Product product){
+        // adding comment for description
         product.setDescription("Product Description");
         return product;
     }
