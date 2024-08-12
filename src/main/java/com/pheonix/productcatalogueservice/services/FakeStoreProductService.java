@@ -1,5 +1,6 @@
 package com.pheonix.productcatalogueservice.services;
 
+import com.pheonix.productcatalogueservice.clients.FakeStoreApiClient;
 import com.pheonix.productcatalogueservice.dtos.FakeStoreProductDto;
 import com.pheonix.productcatalogueservice.dtos.ProductDto;
 import com.pheonix.productcatalogueservice.models.Category;
@@ -24,10 +25,17 @@ public class FakeStoreProductService implements IProductService {
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
 
+    @Autowired
+    private FakeStoreApiClient fakeStoreApiClient;
+
     @Override
     public Product getProductById(Long id) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
-        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForEntity("http://fakestoreapi.com/products/{id}", FakeStoreProductDto.class,id).getBody();
+
+        /*
+            RestTemplate restTemplate = restTemplateBuilder.build();
+            FakeStoreProductDto fakeStoreProductDto = restTemplate.getForEntity("http://fakestoreapi.com/products/{id}", FakeStoreProductDto.class,id).getBody();
+        */
+        FakeStoreProductDto fakeStoreProductDto =fakeStoreApiClient.getProductById(id);
         return getProduct(fakeStoreProductDto);
     }
 
